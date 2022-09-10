@@ -1,0 +1,95 @@
+{% include "header.html" %}
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip({
+        placement : 'top'
+    });
+});
+</script>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/home-pic.png')}})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Laptop friendly?</h1>
+            <span class="subheading">Find Work Friendly Cafes throughout NYC!</span>
+
+                <div style="margin: 20px;">
+              <a href="{{ url_for('cafes') }}" style="margin: 10px;" class="btn btn-primary animated fadeInUp scroll">View Cafes</a> <a style="margin: 10px;" href="/add" class="btn btn-primary">Add Cafe</a>
+                </div>
+
+              {% if not current_user.is_authenticated: %}
+              <p style="margin-left: 43px; color: #d8d8d8;" class="subheading"> <a class="home-login" href="{{ url_for('login') }}">Login</a> | <a class="home-register" href="{{ url_for('register') }}">Register</a> </p>
+              {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+<section id="cafes-of-the-day" class="coffee-shops">
+
+        <div class="section-title">
+            <h2 style="color: #0085A1; padding-top: 20px">Cafes of the Day</h2>
+        </div>
+                        <hr>
+        {% for row in three_cafes %}
+        <div class="row justify-content-center">
+
+            {% for cafe in row %}
+
+            <div class="col-lg-4 d-flex justify-content-center mt-5 align-items-stretch">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ cafe.img_url }}" style="height:215px" ; class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ cafe.name }}</h5>
+                        <div class="row">
+                            <div class="col-lg-6 mb-3">
+                                <h6 class="card-subtitle text-muted mb-1"> {{ cafe.location }} </h6>
+                                <a href="{{ cafe.map_url }}" class="card-link"> Google Maps </a>
+                                <p class="card-text mt-2">
+                                    <i title="Average Coffee Price" class="fas fa-coffee mr-3" aria-hidden="true"></i> {{ cafe.coffee_price }}
+                                    <br>
+                                    <i title="Seats Available" class="fas fa-chair mr-3" aria-hidden="true"></i> {{ cafe.seats}}
+                                </p>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                                <a href="{{ url_for('edit_cafe', cafe_id=cafe.id)}}" class="btn btn-primary">Update</a>
+                            </div>
+                        </div>
+                        <p class="card-text items">
+                            {% if cafe.has_wifi == 1%}
+                            <i title="Wifi Available" class="fas fa-wifi" aria-hidden="true"></i>
+                            {% endif %}
+
+                            {% if cafe.has_sockets == 1%}
+                            <i title="Outlets Available" class="fas fa-plug" style="width: 1.25rem; text-align:center" aria-hidden="true"></i>
+                            {% endif %}
+
+                            {% if cafe.has_toilet == 1%}
+                            <i title="Bathroom Available" class="fas fa-toilet" aria-hidden="true"></i>
+                            {% endif %}
+
+                            {% if cafe.can_take_calls == 1%}
+                            <i title="Allowed to Call" class="fas fa-phone" aria-hidden="true"></i>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    <div class="d-flex justify-content-center">
+    <a href="{{ url_for('cafes') }}" style="margin: 60px;" class="btn btn-primary animated fadeInUp scroll">View All</a>
+    </div>
+    </section>
+  <hr>
+
+{% include "footer.html" %}

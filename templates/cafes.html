@@ -1,0 +1,87 @@
+{% include "header.html" %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/cafe3-bg.png')}})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Featured Cafes</h1>
+            <span class="subheading">A catalog of Work-friendly Cafes throughout NYC!</span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+<section id="cafes" class="coffee-shops">
+
+<!--        <div class="section-title">-->
+<!--            <h2 style="color: #0085A1; padding-top: 20px">Featured Cafes</h2>-->
+<!--        </div>-->
+
+        {% for row in all_cafes %}
+        <div class="row justify-content-center">
+
+            {% for cafe in row %}
+
+            <div class="col-lg-4 d-flex justify-content-center mt-5 align-items-stretch">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ cafe.img_url }}" style="height:215px" ; class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ cafe.name }}</h5>
+                        <div class="row">
+                            <div class="col-lg-6 mb-3">
+                                <h6 class="card-subtitle text-muted mb-1"> {{ cafe.location }} </h6>
+                                <a href="{{ cafe.map_url }}" class="card-link"> Google Maps </a>
+                                <p class="card-text mt-2">
+                                    <i title="Average Coffee Price" class="fas fa-coffee mr-3" aria-hidden="true"></i> {{ cafe.coffee_price }}
+                                    <br>
+                                    <i title="Seats Available" class="fas fa-chair mr-3" aria-hidden="true"></i> {{ cafe.seats}}
+                                </p>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                            <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+
+                                <a style="margin-bottom: 10px" href="{{ url_for('edit_cafe', cafe_id=cafe.id)}}" class="btn btn-primary">Update</a>
+                                {% if current_user.is_authenticated: %}
+                                    {% if current_user.cafes != None: %}
+                                       {% if cafe.id|string() not in current_user.cafes: %}
+                                            <a href="{{ url_for('user_save_cafe', cafe_id=cafe.id)}}" class="btn btn-primary">Save</a>
+                                        {% else: %}
+                                            <a href="{{ url_for('get_user_page', username=current_user.name) }}" class="btn btn-warning">Saved</a>
+                                        {% endif %}
+                                    {% else %}
+                                            <a href="{{ url_for('user_save_cafe', cafe_id=cafe.id)}}" class="btn btn-primary">Save</a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            </div>
+                        </div>
+                        <p class="card-text items">
+                            {% if cafe.has_wifi == 1%}
+                            <i title="Wifi Available" class="fas fa-wifi" aria-hidden="true"></i>
+                            {% endif %}
+                            {% if cafe.has_sockets == 1%}
+                            <i title="Outlets Available" class="fas fa-plug" style="width: 1.25rem; text-align:center" aria-hidden="true"></i>
+                            {% endif %}
+                            {% if cafe.has_toilet == 1%}
+                            <i title="Bathroom Available" class="fas fa-toilet" aria-hidden="true"></i>
+                            {% endif %}
+                            {% if cafe.can_take_calls == 1%}
+                            <i title="Allowed to Call" class="fas fa-phone" aria-hidden="true"></i>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </section>
+  <hr>
+
+{% include "footer.html" %}

@@ -1,0 +1,116 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{{ url_for('static', filename='img/add-bg.jpg')}}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Edit Cafe</h1>
+            <span class="subheading">Contribute by updating the accuracy of the cafes!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <form method="POST" action="{{ url_for('edit_cafe', cafe_id=cafe.id)}}" class="form">
+
+          <div class="form-group row">
+            <label for="name">Cafe Name</label>
+            <input class="form-control" id="name" name="name" required type="text" value="{{cafe.name}}">
+          </div>
+          <div class="form-group row">
+            <label for="map_url">Google Maps URL</label>
+            <input class="form-control" id="map_url" name="map_url" required type="text" value="{{cafe.map_url}}">
+          </div>
+          <div class="form-group row">
+            <label for="img_url">Image URL</label>
+            <input class="form-control" id="img_url" name="img_url" required type="text" value="{{cafe.img_url}}">
+          </div>
+          <div class="form-group row">
+            <label for="location">Cafe Location</label>
+            <input class="form-control" id="location" name="location" required type="text" value="{{cafe.location}}">
+          </div>
+
+
+          <div class="form-check mb-4 row">
+            {% if cafe.has_sockets == 1: %}
+            <input class="form-check-input" id="has_sockets" name="has_sockets" checked="checked" type="checkbox" value=1>
+            {% else: %}
+            <input class="form-check-input" id="has_sockets" name="has_sockets" type="checkbox" value=1>
+            {% endif %}
+            <input id='has_socketsHidden' type='hidden' value=0 name='has_sockets'>
+            <label class="form-check-label" for="has_sockets">Sockets Available?</label>
+          </div>
+
+          <div class="form-check mb-4 row">
+            {% if cafe.has_toilet == 1: %}
+            <input class="form-check-input" id="has_toilet" name="has_toilet" checked="checked" type="checkbox" value=1>
+            {% else: %}
+            <input class="form-check-input" id="has_toilet" name="has_toilet" type="checkbox" value=1>
+            {% endif %}
+            <input id='has_toiletHidden' type='hidden' value=0 name='has_toilet'>
+            <label class="form-check-label" for="has_toilet">Toilets Available?</label>
+          </div>
+
+          <div class="form-check mb-4 row">
+            {% if cafe.has_wifi == 1: %}
+            <input class="form-check-input" id="has_wifi" name="has_wifi" checked="checked" type="checkbox" value=1>
+            {% else: %}
+            <input class="form-check-input" id="has_wifi" name="has_wifi" type="checkbox" value=1>
+            {% endif %}
+            <input id='has_wifiHidden' type='hidden' value=0 name='has_wifi'>
+            <label class="form-check-label" for="has_wifi">Wifi Available?</label>
+          </div>
+
+          <div class="form-check mb-4 row">
+            {% if cafe.can_take_calls == 1: %}
+            <input class="form-check-input" id="can_take_calls" name="can_take_calls" checked="checked" type="checkbox" value=1>
+            {% else: %}
+            <input class="form-check-input" id="can_take_calls" name="can_take_calls" type="checkbox" value=1>
+            {% endif %}
+            <input id='can_take_callsHidden' type='hidden' value=0 name='can_take_calls'>
+            <label class="form-check-label" for="can_take_calls">Call taking Available?</label>
+          </div>
+
+          <div class="form-group row">
+            <label for="seats" >How many seats?</label>
+            <select class="form-control" id="seats" name="seats" required type="text" value="">
+              <option selected>{{cafe.seats}}</option>
+              <option>0-10</option>
+              <option>10-20</option>
+              <option>20-30</option>
+              <option>30-40</option>
+              <option>50+</option>
+            </select>
+          </div>
+
+          <div class="form-group row">
+            <label for="coffee_price">Average Coffee Price($)</label>
+            <input class="form-control" id="coffee_price" name="coffee_price" type="text" value="{{cafe.coffee_price}}">
+          </div>
+
+          <div class="form-group row">
+            <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Update Cafe">
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% include "footer.html" %}
+{% endblock %}
+
+
+
+
+

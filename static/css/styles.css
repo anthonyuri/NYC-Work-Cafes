@@ -1,0 +1,61 @@
+.section-title {
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.section-title h2{
+    width: 40px
+    height: 3px;
+}
+
+.bi-cup {
+    padding-right: 150px;
+    color: red;
+}
+
+.form-check-input {
+    padding-left: 30px
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem!important;
+}
+
+.no-cafes-hr {
+    border-color: #989f9f;
+}
+
+hr {
+    border-style: none;
+    border-top-style: dotted;
+    border-color: #EAF6F6;
+    border-width: 6px;
+    width: 4%;
+    margin: 10px auto;
+}
+
+p a {
+    text-decoration: none;
+}
+
+.register {
+    color: white;
+    text-decoration: underline;
+}
+
+.home-login {
+   color: #d8d8d8;
+   text-decoration: none;
+}
+
+
+.home-register {
+    color: #d8d8d8;
+    text-decoration: underline;
+}
+
+.no-cafes {
+    color: #0085a1;
+    margin: 42px auto;
+    text-align: center;
+}
